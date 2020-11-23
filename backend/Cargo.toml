@@ -1,0 +1,24 @@
+[package]
+name = "server-hhfa"
+version = "0.1.0"
+authors = ["timroberton <timroberton@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "server-hhfa"
+path = "src/main.rs"
+
+[dependencies]
+rocket = "0.4.6"
+rocket_cors = "0.5.1"
+rocket_upload = "0.1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "0.8", features = ["serde", "v4"] }
+handlebars = "3.5.0"
+typescript-definitions = "0.1"
+
+[dependencies.rocket_contrib]
+version = "0.4.6"
+default-features = false
+features = ["json", "serve"]
