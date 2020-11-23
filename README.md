@@ -100,7 +100,7 @@ GET /delete_upload/<session_id>/<file_name>
 # Endpoints for running analyses and streaming output files
 POST /render_script
 POST /analyze
-POST /stream_file/<session_id>/<temp_id>/<file_name>
+GET /stream_file/<session_id>/<temp_id>/<file_name>
 ```
 
 All endpoints return a JSON object with the same structure...
