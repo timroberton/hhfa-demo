@@ -1,22 +1,19 @@
 
 # HHFA Analysis Tool ~ Version 0.1 ~ 31.12.2020
 
-This is a demo of the HHFA Analysis Tool. It is meant to showcase the **_architecture only_**. It doesn't capture the statistical code that is the heart of the tool.
+This is the first version of the HHFA Analysis Tool, which allows you to:
 
-The demo allows you to:
-
-1. Start a session
-2. Upload a data file
-3. Use a basic query builder to generate an R script to be run on the data file
-4. View outputs from the generated R script
+1. Upload a HHFA dataset file (a Stata .dta file from the CSPro survey tool),
+2. Click "Run", to analyze the dataset with either the default or custom configuration, and
+3. View analysis outputs and download a report.
 
 ## Example dataset
 
-For playing with the demo, you can use the example dataset ([example_dataset.dta](https://github.com/timroberton/hhfa-demo/blob/master/example_dataset.dta)) or any other `.dta` file.
+For testing the demo, you can use the example dataset ([example_dataset.dta](https://github.com/timroberton/hhfa-demo/blob/master/example_dataset.dta)) or any other `.dta` file.
 
 ## Demo of the demo
 
-You can see the demo already deployed at the following addresses:
+You can see the platform deployed at the following addresses:
 
 **Frontend** (hosted on Netlify with custom subdomain): [https://tr-hhfa-1.netlify.app/](https://tr-hhfa-1.netlify.app/)
 
