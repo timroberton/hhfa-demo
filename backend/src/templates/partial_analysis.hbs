@@ -2,6 +2,8 @@
 {{~#if (eq stratVar "stratnone")~}}
 
 #################### START Analysis {{id}} National ####################
+
+{{#if (eq binaryAnalysisType "Proportion") ~}}
 {{id}}_stratnone_df <- df %>%
     summarise(
         Area= c("All facilities"),
@@ -17,12 +19,32 @@
     )
 
 write_csv({{id}}_stratnone_df, '{{id}}_stratnone_table.csv')
+{{~/if~}}
+
+{{#if (eq binaryAnalysisType "Count") ~}}
+{{id}}_stratnone_df <- df %>%
+    summarise(
+        Area= c("All facilities"),
+        {{~#each itemIds}}
+        {{this}} = sum({{this}}),
+        {{~/each}}
+        N = format(n(), big.mark=","),
+    ) %>%
+    rename(
+        {{~#each items}}
+         "{{label}}" = {{id}},
+        {{~/each}}
+    )
+
+write_csv({{id}}_stratnone_df, '{{id}}_stratnone_table.csv')
+{{~/if}}
+
 ##################### END Analysis {{id}} National #####################
 
 {{~else~}}
 
 
-#################### START Analysis {{id}} {{stratVar}} ####################
+#################### START Analysis {{id}} {{stratLabel}} ####################
 
 {{#if (eq binaryAnalysisType "Proportion") ~}}
 {{id}}_{{stratVar}}_df <- df %>%
@@ -34,10 +56,20 @@ write_csv({{id}}_stratnone_df, '{{id}}_stratnone_table.csv')
         N = format(n(), big.mark=","),
         .groups = 'drop'
     ) %>%
-    arrange({{stratVar}})
+    arrange({{stratVar}}) %>%
+    rename(
+        {{~#each items}}
+         "{{label}}" = {{id}},
+        {{~/each}}
+    )
 
-{{id}}_{{stratVar}}_plot <- ggplot(data={{id}}_{{stratVar}}_df, aes(x={{stratVar}}, y={{(lookup itemIds 0)}}, fill={{stratVar}})) +
-    geom_bar(stat="identity") + 
+{{id}}_{{stratVar}}_df_forplot <- {{id}}_{{stratVar}}_df %>%
+    gather("indicator", "value", {{#each items}}{{#if (ne @index 0)}}, {{/if}}"{{label}}"{{~/each}})
+
+{{id}}_{{stratVar}}_plot <- ggplot(data={{id}}_{{stratVar}}_df_forplot, aes(x=indicator, y=value, fill={{stratVar}})) +
+    geom_bar(position = "dodge", stat="identity") + 
+    scale_fill_brewer(palette="Set3") +
+    labs(x = "\nIndicators", y = "Proportion\n", fill = "{{stratLabel}}") +
     ylim(0, 1)
 {{~/if~}}
 
@@ -51,17 +83,27 @@ write_csv({{id}}_stratnone_df, '{{id}}_stratnone_table.csv')
         N = format(n(), big.mark=","),
         .groups = 'drop'
     ) %>%
-    arrange({{stratVar}})
+    arrange({{stratVar}}) %>%
+    rename(
+        {{~#each items}}
+         "{{label}}" = {{id}},
+        {{~/each}}
+    )
 
-{{id}}_{{stratVar}}_plot <- ggplot(data={{id}}_{{stratVar}}_df, aes(x={{stratVar}}, y={{(lookup itemIds 0)}}, fill={{stratVar}})) +
-    geom_bar(stat="identity")
+{{id}}_{{stratVar}}_df_forplot <- {{id}}_{{stratVar}}_df %>%
+    gather("indicator", "value", {{#each items}}{{#if (ne @index 0)}}, {{/if}}"{{label}}"{{~/each}})
+
+{{id}}_{{stratVar}}_plot <- ggplot(data={{id}}_{{stratVar}}_df_forplot, aes(x=indicator, y=value, fill={{stratVar}})) +
+    geom_bar(position = "dodge", stat="identity") + 
+    scale_fill_brewer(palette="Set3") +
+    labs(x = "\nIndicators", y = "Count\n", fill = "{{stratLabel}}")
 {{~/if}}
 
 write_csv({{id}}_{{stratVar}}_df, '{{id}}_{{stratVar}}_table.csv')
 
 ggsave('{{id}}_{{stratVar}}_plot.png', plot = {{id}}_{{stratVar}}_plot, width = 10, height = 6, dpi = 300)
 
-##################### END Analysis {{id}} {{stratVar}} #####################
+##################### END Analysis {{id}} {{stratLabel}} #####################
 
 
 

@@ -1,0 +1,22 @@
+{
+  "config1": {
+    "useModule1": true,
+    "useModule2": true,
+    "useModule3": true,
+    "useModule4": true,
+    "useModule1CoreAdditional": false,
+    "useModule1Supplementary": false,
+    "useModule4CoreAdditional": false,
+    "variableSurveyDesign1": null,
+    "variableSurveyDesign2": null,
+    "variableSurveyDesign3": null,
+    "variableSurveyDesign4": null,
+    "variableStratifier1": null,
+    "variableStratifier2": null,
+    "variableStratifier3": null,
+    "variableStratifier4": null
+  },
+  "variables": [],
+  "indicators": [],
+  "analyses": []
+}

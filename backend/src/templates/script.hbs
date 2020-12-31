@@ -92,16 +92,16 @@ df <- select(
 {{#each analyses}}
 {{> analysis stratVar="stratnone"}}
 {{#if ../config1.variableStratifier1}}
-{{> analysis stratVar="strat1"}}
+{{> analysis stratVar="strat1" stratLabel="Administration level"}}
 {{~/if}}
 {{#if ../config1.variableStratifier2}}
-{{> analysis stratVar="strat2"}}
+{{> analysis stratVar="strat2" stratLabel="Urban/rural"}}
 {{~/if}}
 {{#if ../config1.variableStratifier3}}
-{{> analysis stratVar="strat3"}}
+{{> analysis stratVar="strat3" stratLabel="Facility type"}}
 {{~/if}}
 {{#if ../config1.variableStratifier4}}
-{{> analysis stratVar="strat4"}}
+{{> analysis stratVar="strat4" stratLabel="Managing authority"}}
 {{~/if}}
 
 {{/each ~}}

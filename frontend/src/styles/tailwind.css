@@ -1,0 +1,162 @@
+@tailwind base;
+
+html, body, #root, #__next {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+html {
+  /* overflow: auto; */
+  /* overflow: hidden; */
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.r-script > pre {
+	@apply h-full overflow-y-auto;
+	padding: 20px!important;
+}
+
+/* purgecss start ignore */
+.markdown {
+	@apply leading-relaxed text-base text-gray-900;
+}
+
+.markdown h1 {
+	@apply mt-8 mb-4 text-3xl font-bold;
+}
+
+.markdown h2 {
+	@apply mt-8 mb-4 text-2xl font-bold;
+}
+
+.markdown h3 {
+	@apply mt-6 mb-3 font-bold;
+}
+
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+	@apply text-red-500;
+}
+
+/* Links */
+.markdown a {
+	@apply text-blue-600;
+}
+.markdown a:hover {
+	@apply underline;
+}
+/* Paragraph */
+.markdown p {
+	@apply mb-4;
+}
+/* Lists */
+.markdown ul,
+.markdown ol {
+	@apply mb-4 ml-8;
+}
+.markdown li > p,
+.markdown li > ul,
+.markdown li > ol {
+	@apply mb-2;
+}
+.markdown ol {
+	@apply list-decimal;
+}
+.markdown ul {
+	@apply list-disc;
+}
+/* Blockquotes */
+.markdown blockquote {
+	@apply p-2 mx-3 sm:mx-6 bg-gray-100 mb-4 border-l-4 border-gray-400 italic overflow-x-hidden;
+}
+.markdown blockquote > p {
+	@apply mb-0 text-gray-600;
+}
+/* Tables */
+.markdown td,
+.markdown th {
+	@apply px-2 py-1 border border-gray-400;
+}
+
+.markdown th {
+	@apply bg-gray-100;
+}
+
+.markdown tr:nth-child(odd) {
+	/* @apply bg-gray-100; */
+}
+.markdown table {
+	@apply mb-6;
+}
+
+/* Wrap any inline highlights `that are really long`, but don't modify the setting for codeblocks (inside ```), which are rendered in as: <pre><code>... */
+.markdown :not(pre) > code.language-text {
+	white-space: pre-line;
+}
+
+.markdown pre {
+	@apply mb-4 bg-blue-50 rounded-md px-4 py-2 leading-tight overflow-x-auto !important;
+}
+
+.markdown code {
+	@apply text-blue-900 font-mono;
+	background: transparent!important;
+}
+
+.markdown code.language-plaintext {
+	@apply text-gray-600;
+}
+
+.markdown pre > code {
+	@apply text-sm;
+}
+
+.markdown img {
+	@apply mb-4 bg-blue-50 rounded-md;
+}
+  
+.markdown .katex {
+	font-size: 1.21em!important;
+}
+
+@media print {
+	html {
+	  overflow-y: visible;
+	  overflow-x: visible;
+	}
+	.markdown h1 {
+		@apply mt-0;
+		page-break-before: always;
+	}
+	.markdown p {
+		page-break-inside: avoid;
+		break-inside: avoid;
+	}
+	.markdown .breaker {
+		@apply m-0 h-0 opacity-0;
+		page-break-before: always;
+	}
+	.markdown .hiddeninprint {
+		@apply m-0 hidden;
+	}
+	@page {
+		size: letter;
+		margin-top: 40px;
+		margin-bottom: 40px;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	@page:first {
+		margin-top: 0;
+	}
+}
+
+/* purgecss end ignore */
+
+
+@tailwind components;
+@tailwind utilities;
