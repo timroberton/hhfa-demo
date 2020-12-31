@@ -1,7 +1,7 @@
 
-# HHFA Analysis Tool ~ Version 0.1 ~ 31.12.2020
+# HHFA Analysis Platform ~ Version 0.1 ~ 31.12.2020
 
-This is the first version of the HHFA Analysis Tool, which allows you to:
+This is the first version of the HHFA Analysis Platform, which allows you to:
 
 1. Upload a HHFA dataset file (a Stata .dta file from the CSPro survey tool),
 2. Click "Run", to analyze the dataset with either the default or custom configuration, and
@@ -25,7 +25,7 @@ I made a tutorial video of me using the demo app, which you can watch [here](htt
 
 ## Deployment
 
-There are two components to the analysis tool: a frontend (HTML/CSS/JS) and a backend (compiled binary, containerized with R). Both components are included in this repo.
+There are two components to the analysis platform: a frontend (HTML/CSS/JS) and a backend (compiled binary, containerized with R). Both components are included in this repo.
 
 ### Frontend
 
