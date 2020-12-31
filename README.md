@@ -3,8 +3,8 @@
 
 This is the first version of the HHFA Analysis Platform, which allows you to:
 
-1. Upload a HHFA dataset file (a Stata .dta file from the CSPro survey tool),
-2. Click "Run", to analyze the dataset with either the default or custom configuration, and
+1. Upload a HHFA dataset (a Stata .dta file exported from the CSPro survey tool),
+2. Click "Run", to analyze the dataset with the default or custom configuration, and
 3. View analysis outputs and download a report.
 
 ## Example dataset
@@ -21,17 +21,17 @@ You can see the platform deployed at the following addresses:
 
 ## Walk-through video
 
-I made a tutorial video of me using the demo app, which you can watch [here](https://tr-hhfa-1.netlify.app/tutorial).
+I made a tutorial video of me using the platform, which you can watch [here](https://tr-hhfa-1.netlify.app/tutorial).
 
 ## Deployment
 
-There are two components to the analysis platform: a frontend (HTML/CSS/JS) and a backend (compiled binary, containerized with R). Both components are included in this repo.
+There are two software components to the analysis platform: a frontend (HTML/CSS/JS) and a backend (compiled binary, containerized with R). Both components are included in this repo.
 
 ### Frontend
 
-The frontend is a single-page web app (client). It should be served via a regular http server. It is built using Typescript/React/Webpack, and compiled to HTML/CSS/JS. In this repo you can see the compiled HTML/CSS/JS (in the `/frontend` directory), ready to be served as a static page. Drop it in a `www` folder or use a tool such as [serve](https://www.npmjs.com/package/serve) to serve the client.
+The frontend is a single-page web app (client). It should be served via a regular http server. It is built using Typescript and Next.js, and compiled to HTML/CSS/JS. In this repo you can see the compiled HTML/CSS/JS and assets (in the `/frontend/dist` directory), ready to be served as a static page. Drop it in a `www` folder or use a tool such as [serve](https://www.npmjs.com/package/serve) to serve the client. You can also see the frontend source files (in the `/frontend/src` directory).
 
-When you navigate to the client for the first time, it will ask for the backend URL. (If you are running the backend locally using Option 1 described below, the URL will be `http://localhost:9000`.) This feature is for the demo only. If we decide on a permanent backend address, we can eliminate this step.
+When you navigate to the client for the first time, it will ask for the backend URL. (If you are running the backend locally using Option 1 described below, the URL will be `http://localhost:9000`.) This feature is temporary. When we decide on a permanent backend address, we can eliminate this step.
 
 ### Backend
 
@@ -80,10 +80,10 @@ As I said, I think option 1 is the best.
 
 ### Additional notes on backend deployment
 
-For **production** deployment of the backend, we will also need to:
+For **production** deployment of the backend, you should also:
 
 - Put behind SSL / HTTPS
-- Ensure uploads of up to 1 Gb (some services like NGINX restrict size of uploads by default)
+- Ensure uploads of up to 1 Gb (some services such as NGINX restrict size of uploads by default)
 
 ## Backend endpoints
 
