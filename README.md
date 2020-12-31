@@ -4,7 +4,7 @@
 This is the first version of the HHFA Analysis Platform, which allows you to:
 
 1. Upload a HHFA dataset (a Stata .dta file exported from the CSPro survey tool),
-2. Click "Run", to analyze the dataset with the default or custom configuration, and
+2. Click "Run", to analyze the dataset (with either the default or custom configuration), and
 3. View analysis outputs and download a report.
 
 ## Example dataset
