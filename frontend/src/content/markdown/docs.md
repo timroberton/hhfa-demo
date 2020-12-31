@@ -37,50 +37,43 @@ You can watch a tutorial video and demonstration of the platform on this page: <
 
 ![a4](/images/a4.png)
 
-![a5](/images/a5.png)
-
-![a6](/images/a6.png)
+## Configuring stratifier variables
 
 ![b1](/images/b1.png)
 
 ![b2](/images/b2.png)
 
+## Creating indicators
+
 ![c1](/images/c1.png)
 
 ![c2](/images/c2.png)
+
+## Creating analyses
 
 ![d1](/images/d1.png)
 
 ![d2](/images/d2.png)
 
-![d3](/images/d3.png)
+## Getting results
 
-![d4](/images/d4.png)
+![e1](/images/e1.png)
 
-This is a demo of the HHFA Analysis Tool. It is meant to showcase the **_architecture only_**. It doesn't capture the statistical code that is the heart of the tool.
+![e2](/images/e2.png)
 
-The demo allows you to:
+![e3](/images/e3.png)
 
-1. Start a session
-2. Upload a data file
-3. Use a basic query builder to generate an R script to be run on the data file
-4. View outputs from the generated R script
+![e4](/images/e4.png)
 
-## Example dataset
+![e5](/images/e5.png)
 
-For playing with the demo, you can use the example dataset ([example_dataset.dta](https://github.com/timroberton/hhfa-demo/blob/master/example_dataset.dta)) or any other `.dta` file.
-
-## Demo of the demo
-
-You can see the demo already deployed at the following addresses:
-
-**Frontend** (hosted on Netlify with custom subdomain): [https://tr-hhfa-1.netlify.app/](https://tr-hhfa-1.netlify.app/)
-
-**Backend** (hosted on Digital Ocean behind NGINX service with custom domain): [https://hhfa.capacityapps.xyz/](https://hhfa.capacityapps.xyz/)
+![e6](/images/e6.png)
 
 ## Deployment
 
-There are two components to the analysis tool: a frontend (HTML/CSS/JS) and a backend (compiled binary, containerized with R). Both components are included in this repo.
+> NOTE: This section is for other software developers and IT staff
+
+There are two software components to the analysis platform: a frontend (HTML/CSS/JS) and a backend (compiled binary, containerized with R). Both components are included in this repo.
 
 ### Frontend
 
@@ -173,9 +166,3 @@ All endpoints return a JSON object with the same structure...
 ```
 
 The only exception is the `/stream_file` endpoint, which returns the requested file as a stream, and the `/upload` endpoint, which returns an HTTP status code.
-
-## Known issues and todos
-
-- Need to implement session timeout, including alerts to user and regular clean-up on backend.
-- Need to consolidate `/upload` and `/varlist` endpoints. Currently, after an upload, the `/varlist` endpoint is triggered via a second http request, which validates the file and extracts variable data. I will consolidate the two, so that the `/varlist` process is part of the same, single http request to `/upload`.
-- Need to persist data to `localStorage`, so users can return to their work after closing the browser.

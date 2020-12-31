@@ -2,7 +2,7 @@ import { useState } from "react";
 import { deleteUpload, getVarlist } from "../actions/crud";
 import { RawVar } from "../types_server";
 import { copy } from "../utils";
-import _DEFAULT_VARLIST from "../default_varlist.json";
+// import _DEFAULT_VARLIST from "../default_varlist.json";
 
 export type UseDatasets = {
     refreshVarlist: (dn: DatasetNumber, fileName: string) => Promise<string>,
