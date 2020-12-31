@@ -1,0 +1,68 @@
+
+{{~#if (eq stratVar "stratnone")~}}
+
+#################### START Analysis {{id}} National ####################
+{{id}}_stratnone_df <- df %>%
+    summarise(
+        Area= c("All facilities"),
+        {{~#each itemIds}}
+        {{this}} = mean({{this}}),
+        {{~/each}}
+        N = format(n(), big.mark=","),
+    ) %>%
+    rename(
+        {{~#each items}}
+         "{{label}}" = {{id}},
+        {{~/each}}
+    )
+
+write_csv({{id}}_stratnone_df, '{{id}}_stratnone_table.csv')
+##################### END Analysis {{id}} National #####################
+
+{{~else~}}
+
+
+#################### START Analysis {{id}} {{stratVar}} ####################
+
+{{#if (eq binaryAnalysisType "Proportion") ~}}
+{{id}}_{{stratVar}}_df <- df %>%
+    group_by({{stratVar}}) %>%
+    summarise(
+        {{~#each itemIds}}
+        {{this}} = mean({{this}}),
+        {{~/each}}
+        N = format(n(), big.mark=","),
+        .groups = 'drop'
+    ) %>%
+    arrange({{stratVar}})
+
+{{id}}_{{stratVar}}_plot <- ggplot(data={{id}}_{{stratVar}}_df, aes(x={{stratVar}}, y={{(lookup itemIds 0)}}, fill={{stratVar}})) +
+    geom_bar(stat="identity") + 
+    ylim(0, 1)
+{{~/if~}}
+
+{{~#if (eq binaryAnalysisType "Count") ~}}
+{{id}}_{{stratVar}}_df <- df %>%
+    group_by({{stratVar}}) %>%
+    summarise(
+        {{~#each itemIds}}
+        {{this}} = sum({{this}}),
+        {{~/each}}
+        N = format(n(), big.mark=","),
+        .groups = 'drop'
+    ) %>%
+    arrange({{stratVar}})
+
+{{id}}_{{stratVar}}_plot <- ggplot(data={{id}}_{{stratVar}}_df, aes(x={{stratVar}}, y={{(lookup itemIds 0)}}, fill={{stratVar}})) +
+    geom_bar(stat="identity")
+{{~/if}}
+
+write_csv({{id}}_{{stratVar}}_df, '{{id}}_{{stratVar}}_table.csv')
+
+ggsave('{{id}}_{{stratVar}}_plot.png', plot = {{id}}_{{stratVar}}_plot, width = 10, height = 6, dpi = 300)
+
+##################### END Analysis {{id}} {{stratVar}} #####################
+
+
+
+{{~/if~}}

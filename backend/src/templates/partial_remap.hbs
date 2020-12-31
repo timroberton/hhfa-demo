@@ -1,0 +1,30 @@
+{{~#if rawVar}}
+
+## Remap {{rawVar.rawVarName}} to {{newVar}}
+df <- rename(
+	df,
+	{{newVar}} = {{rawVar.rawVarName}},
+)
+df <- mutate(
+	df,
+	{{newVar}} = zap_labels({{newVar}}),
+	{{~#if (or rawVar.useRemapValues rawVar.useRemapMissing)}}
+	{{newVar}} = recode(
+		{{newVar}},
+		{{#if rawVar.useRemapValues~}}
+		{{#each rawVar.remapValues~}}
+		"{{from}}" = {{#if toMissing}}NULL{{else}}{{to}}{{/if}},
+		{{/each~}}
+		{{~/if~}}
+		{{~#if rawVar.useRemapMissing~}}
+		.missing = {{rawVar.remapMissing}},
+	{{/if~}}
+	),
+	{{~/if}}
+	{{newVar}} = factor(
+		{{newVar}},
+		levels = c({{#each rawVar.labels}}{{#if (ne @index 0)}}, {{/if}}{{value}}{{/each}}),
+		labels = c({{#each rawVar.labels}}{{#if (ne @index 0)}}, {{/if}}"{{label}}"{{/each}}),
+	),
+)
+{{~/if~}}

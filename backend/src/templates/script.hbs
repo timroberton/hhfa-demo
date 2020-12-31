@@ -1,0 +1,112 @@
+options(warn=-1)
+
+library(dplyr)
+library(tidyr)
+library(haven)
+library(readr)
+library(ggplot2)
+
+df <- read_dta('DATA_FILE_TO_ANALYZE.dta')
+
+##############################################
+########## Map stratifier variables ##########
+##############################################
+
+{{~> remap newVar="strat1" rawVar=config1.variableStratifier1 ~}}
+{{~> remap newVar="strat2" rawVar=config1.variableStratifier2 ~}}
+{{~> remap newVar="strat3" rawVar=config1.variableStratifier3 ~}}
+{{~> remap newVar="strat4" rawVar=config1.variableStratifier4 }}
+
+#########################################
+########## Map other variables ##########
+#########################################
+
+df <- rename(
+    df,
+    {{~#each variables}}
+    {{variableName}} = {{rawVarName}},
+    {{~/each}}
+)
+
+df <- mutate(
+    df,
+    {{~#each variables}}
+    {{variableName}} = zap_labels({{variableName}}),
+    {{~#if (or useRemapValues useRemapMissing)}}
+    {{variableName}} = recode(
+        {{variableName}},
+        {{#if useRemapValues~}}
+        {{#each remapValues~}}
+        "{{from}}" = {{#if toMissing}}NULL{{else}}{{to}}{{/if}},
+        {{/each~}}
+        {{~/if~}}
+        {{~#if useRemapMissing~}}
+        .missing = {{remapMissing}},
+    {{/if~}}
+    ),
+    {{~/if~}}
+    {{/each}}
+)
+
+####################################
+########## Add indicators ##########
+####################################
+
+df <- mutate(
+    df,
+    {{~#each indicators}}
+
+    {{~#if isBinary}}
+    {{id}} = if_else({{condition}}, 1, 0{{#if useRemapMissing}}, missing = {{remapMissing}}{{/if}}),
+    {{~/if~}}
+
+    {{~#if isNumber}}
+    {{id}} = {{#if useRemapMissing}}replace_na({{condition}}, {{remapMissing}}){{else}}{{condition}}{{/if}},
+    {{~/if~}}
+
+    {{~/each}}
+)
+
+df <- select(
+    df,
+    {{~#if config1.variableStratifier1}}
+    strat1,
+    {{~/if~}}
+    {{~#if config1.variableStratifier2}}
+    strat2,
+    {{~/if~}}
+    {{~#if config1.variableStratifier3}}
+    strat3,
+    {{~/if~}}
+    {{~#if config1.variableStratifier4}}
+    strat4,
+    {{~/if~}}
+    {{~#each indicators}}
+    {{id}},
+    {{~/each}}
+)
+
+#################################
+########## Do analyses ##########
+#################################
+{{#each analyses}}
+{{> analysis stratVar="stratnone"}}
+{{#if ../config1.variableStratifier1}}
+{{> analysis stratVar="strat1"}}
+{{~/if}}
+{{#if ../config1.variableStratifier2}}
+{{> analysis stratVar="strat2"}}
+{{~/if}}
+{{#if ../config1.variableStratifier3}}
+{{> analysis stratVar="strat3"}}
+{{~/if}}
+{{#if ../config1.variableStratifier4}}
+{{> analysis stratVar="strat4"}}
+{{~/if}}
+
+{{/each ~}}
+###################################
+########## Final dataset ##########
+###################################
+
+write_csv(df, 'final.csv', append = FALSE, na = "")

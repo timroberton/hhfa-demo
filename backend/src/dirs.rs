@@ -91,6 +91,27 @@ pub fn create_new_session_dir() -> Result<String, std::io::Error> {
         .recursive(false)
         .create(&temp_path)?;
 
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+    // let old_file_path = path_to_sessions().join("../hfa_comb_bfa.dta");
+    // let new_file_path = data_path.join("hfa_comb_bfa.dta");
+    // std::fs::copy(&old_file_path, &new_file_path).unwrap();
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+    // let vl = varlist::get_varlist(&types::VarlistRequest {
+    //     session_id: session_id.clone(),
+    //     file_name: "hfa_comb_bfa.dta".to_string(),
+    // })
+    // .unwrap();
+    // let j = serde_json::to_string_pretty(&vl).unwrap();
+    // std::fs::write("varlist.json", &j).unwrap();
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+    // TEMPORARY FOR DEVELOPMENT
+
     Ok(session_id)
 }
 

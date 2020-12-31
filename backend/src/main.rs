@@ -175,20 +175,26 @@ fn delete_upload(session_id: String, file_name: String) -> Json<HHFAResponse<Str
 
 #[post("/render_script", format = "application/json", data = "<data>")]
 fn render_script(data: Json<types::Structure>) -> Json<HHFAResponse<String>> {
-    let structure = data.into_inner();
-    match analyze::render_script(&structure) {
+    let mut structure = data.into_inner();
+    match analyze::render_script(&mut structure) {
         Ok(v) => Json(HHFAResponse::success(v)),
-        Err(_) => Json(HHFAResponse::error("Problem rendering script")),
+        Err(e) => match e.into_inner() {
+            Some(_other_err) => Json(HHFAResponse::error("NEED TO GET THIS SOMEHOW")),
+            None => Json(HHFAResponse::error("Problem rendering script")),
+        },
     }
 }
 
 #[post("/analyze", format = "application/json", data = "<data>")]
 fn analyze(data: Json<types::AnalyzeRequest>) -> Json<HHFAResponse<String>> {
-    let ar = data.into_inner();
-    println!("Analyzing {:?}", ar);
-    match analyze::run_once(&ar) {
+    let mut ar = data.into_inner();
+    // println!("Analyzing {:?}", ar);
+    match analyze::run_once(&mut ar) {
         Ok(v) => Json(HHFAResponse::success(v)),
-        Err(_) => Json(HHFAResponse::error("Problem running analysis script")),
+        Err(e) => match e.into_inner() {
+            Some(_other_err) => Json(HHFAResponse::error("NEED TO GET THIS SOMEHOW")),
+            None => Json(HHFAResponse::error("Problem rendering script")),
+        },
     }
 }
 
@@ -225,7 +231,7 @@ fn main() {
 
     let cors = rocket_cors::CorsOptions::default().to_cors().unwrap();
 
-    let config = Config::build(Environment::Production)
+    let config = Config::build(Environment::Development)
         .address("0.0.0.0")
         .port(9000)
         .keep_alive(0)
